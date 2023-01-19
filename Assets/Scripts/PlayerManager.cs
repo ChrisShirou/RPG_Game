@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
+using Vector3 = UnityEngine.Vector3;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -13,9 +15,9 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for (int i = 50; i >= -50; i -= 10) {
-            CreateRayCast(transform.position, transform.forward * 100 + transform.right * i, Color.red);
-        }
+        //for (int i = 50; i >= -50; i -= 10) {
+        //    CreateRayCast(transform.position, transform.forward * 100 + transform.right * i, Color.red);
+        //}
     }
     void CreateRayCast(Vector3 pos, Vector3 direction, Color color)
     {
@@ -31,5 +33,9 @@ public class PlayerManager : MonoBehaviour
             print(hit.collider.gameObject);
         }
     }
-    
+    public void Move(Vector3 move_pos)
+    {
+        transform.position = transform.position + move_pos;
+    }
+
 }
