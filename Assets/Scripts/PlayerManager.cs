@@ -37,5 +37,9 @@ public class PlayerManager : MonoBehaviour
     {
         transform.position = transform.position + move_pos;
     }
-
+    public void PlayerRotate(float value)
+    {
+        value = Mathf.Repeat(value, 360);
+        transform.rotation = UnityEngine.Quaternion.Euler(0, value, 0);
+    }
 }
