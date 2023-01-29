@@ -5,7 +5,7 @@ using UnityEngine;
 using static UnityEditor.PlayerSettings;
 using Vector3 = UnityEngine.Vector3;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : Property
 {
     // Start is called before the first frame update
     void Start()
@@ -41,5 +41,9 @@ public class PlayerManager : MonoBehaviour
     {
         value = Mathf.Repeat(value, 360);
         transform.rotation = UnityEngine.Quaternion.Euler(0, value, 0);
+    }
+    public void PlayerAnimation()
+    {
+        
     }
 }

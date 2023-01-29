@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Data.Util.KeywordDependentCollection;
 
-public class EnemyManager : MonoBehaviour
+public class EnemyManager : Property
 {
     public GameObject Player;
     public float speed = 0.01f;
@@ -31,7 +31,7 @@ public class EnemyManager : MonoBehaviour
         DetectArea();
 
         //進入緊戒狀態就追蹤玩家
-        if (isAlert) {
+        if (isAlert && !isAttack) {
             var step = speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, playerLastPos, step);
 
@@ -52,6 +52,7 @@ public class EnemyManager : MonoBehaviour
         {
             //print("進入警戒範圍");
             EnemyActionStatus(0);
+            isAttack = false;
         }
         if (distance <= 2)
         {
@@ -89,6 +90,10 @@ public class EnemyManager : MonoBehaviour
             //切換攻擊狀態
             isAttack = true;
         }
+    }
+    void Attack()
+    {
+        
     }
 
 }
