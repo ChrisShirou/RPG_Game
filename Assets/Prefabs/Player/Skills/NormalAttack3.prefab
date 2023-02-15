@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6300916945916512094}
   - component: {fileID: 6300916945916512095}
   - component: {fileID: 6300916945916512092}
+  - component: {fileID: 1895790325816131310}
   m_Layer: 0
   m_Name: NormalAttack3
   m_TagString: Untagged
@@ -99,6 +100,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1895790325816131310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6300916945916512082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 292fb8b7a7be8c14e8e9f419f69d461f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CastTime: 0
+  SkillTime: 0.5
+  CombolTime: 1.5
+  ColdDownTime: 0
+  AttackMultiplier: 150
 --- !u!1 &6300916947300599878
 GameObject:
   m_ObjectHideFlags: 0

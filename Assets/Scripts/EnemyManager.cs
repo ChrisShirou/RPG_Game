@@ -10,11 +10,11 @@ using Vector3 = UnityEngine.Vector3;
 
 public class EnemyManager : Property
 {
-    public GameObject Player;
-    public Image HpBar;
+    public Slider HpBar;
     public float move_speed = 0.01f;
     public float rotate_speed = 0.01f;
 
+    private GameObject Player;
     private Vector3 playerLastPos;
 
     //是否進入緊戒狀態
@@ -31,6 +31,7 @@ public class EnemyManager : Property
     // Start is called before the first frame update
     void Start()
     {
+        Player = GameObject.Find("Player");
         Max_Hp = this.Hp;
     }
 
@@ -106,7 +107,7 @@ public class EnemyManager : Property
         if (isAlert == false) {
             //切換警戒狀態
             isAlert = true;
-            print(playerLastPos);
+            //print(playerLastPos);
         }
     }
     void AttackMode()
@@ -135,11 +136,16 @@ public class EnemyManager : Property
     void CheckStatus() 
     {
         //更新血條
-        HpBar.rectTransform.sizeDelta = new Vector2(this.Hp / Max_Hp * 100, 10);
+        HpBar.value = this.Hp / Max_Hp;
+        HpBar.transform.LookAt(Camera.main.transform);
 
         //檢查血量
         if (this.Hp <= 0) 
         {
+            MonsterGenerate monsterGenerate = gameObject.transform.parent.
+                                              gameObject.transform.parent.
+                                              gameObject.GetComponent<MonsterGenerate>();
+            monsterGenerate.slimeNumber--;
             Destroy(gameObject);
         }
     }

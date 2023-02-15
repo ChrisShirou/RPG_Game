@@ -10,14 +10,24 @@ using Vector3 = UnityEngine.Vector3;
 
 public class PlayerManager : Property
 {
-    public Image HpBar;
+    public Slider HpBar;
     private Animator animator;
-    private Transform Target;
+    private UIManager uimanager;
+    private GameObject gameUI;
+
+    public float moveSpeed = 10;
+    public float rotateSpeed = 10;
+
     private float Max_Hp;
+    private float rotateValue = 0;
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        gameUI = GameObject.Find("GUI");
+        uimanager = gameUI.GetComponent<UIManager>();
+        //產生血條，取得產生血條底下的圖片
+        //HpBar = uimanager.ShowHpBar(gameObject.transform);
         Max_Hp = this.Hp;
     }
 
@@ -27,7 +37,9 @@ public class PlayerManager : Property
         //for (int i = 50; i >= -50; i -= 10) {
         //    CreateRayCast(transform.position, transform.forward * 100 + transform.right * i, Color.red);
         //}
-        HpBar.rectTransform.sizeDelta = new Vector2(this.Hp / Max_Hp * 100, 10);
+        //根據目前的血量調整血條長度，調整血條面向
+        HpBar.transform.LookAt(Camera.main.transform);
+        HpBar.value = this.Hp / Max_Hp;
     }
     void CreateRayCast(Vector3 pos, Vector3 direction, Color color)
     {
@@ -43,20 +55,23 @@ public class PlayerManager : Property
             print(hit.collider.gameObject);
         }
     }
-    private void OnTriggerStay(Collider other)
+    public void Move(bool isForward)
     {
-        if (other.tag == "Enemy")
-        {
-            Target = other.transform;
-        }
-    }
-    public void Move(Vector3 move_pos)
-    {
+        Vector3 move_pos;
+        if (isForward)
+        { move_pos = transform.forward * moveSpeed; }
+        else
+        { move_pos = -transform.forward * moveSpeed; }
         transform.position = transform.position + move_pos;
     }
-    public void PlayerRotate(float value)
+    public void PlayerRotate(bool isRightTrun)
     {
-        value = Mathf.Repeat(value, 360);
+        float value;
+        if (isRightTrun)
+        { rotateValue += 1 * rotateSpeed; }
+        else 
+        { rotateValue -= 1 * rotateSpeed; }
+        value = Mathf.Repeat(rotateValue, 360);
         transform.rotation = UnityEngine.Quaternion.Euler(0, value, 0);
     }
     public void PlayerAnimation(string anim_name)
@@ -67,14 +82,16 @@ public class PlayerManager : Property
     {
 
     }
-    public void PlayerAttack() 
+    public void PlayerAttack(Transform target, float atkmult) 
     {
-        if (Target)
+        if (target)
         {
             print("攻擊範圍內有目標");
-            float enemy_hp = Target.GetComponent<EnemyManager>().Hp;
-            enemy_hp -= this.Atk;
-            Target.GetComponent<EnemyManager>().Hp = enemy_hp;
+            float enemy_hp = target.GetComponent<EnemyManager>().Hp;
+            float damage = this.Atk * atkmult / 100;
+            uimanager.ShowDamage(target, damage);
+            enemy_hp -= damage;
+            target.GetComponent<EnemyManager>().Hp = enemy_hp;
         }
         else 
         {

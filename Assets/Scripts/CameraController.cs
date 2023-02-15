@@ -8,6 +8,12 @@ public class CameraController : MonoBehaviour
     public float maxYAngle = 80f;
     private Vector2 currentRotation;
     // Update is called once per frame
+    private GameManager gameManager;
+
+    private void Start()
+    {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
     void Update()
     {
 
@@ -25,11 +31,14 @@ public class CameraController : MonoBehaviour
         //{
 
         //}
-        currentRotation.x += Input.GetAxis("Mouse X") * rotateSpeed;
-        currentRotation.y -= Input.GetAxis("Mouse Y") * rotateSpeed;
-        currentRotation.x = Mathf.Repeat(currentRotation.x, 360);
-        currentRotation.y = Mathf.Clamp(currentRotation.y, -maxYAngle, maxYAngle);
-        transform.rotation = Quaternion.Euler(currentRotation.y, currentRotation.x, 0);
+        if (!gameManager.isMouseVisible)
+        {
+            currentRotation.x += Input.GetAxis("Mouse X") * rotateSpeed;
+            currentRotation.y -= Input.GetAxis("Mouse Y") * rotateSpeed;
+            currentRotation.x = Mathf.Repeat(currentRotation.x, 360);
+            currentRotation.y = Mathf.Clamp(currentRotation.y, -maxYAngle, maxYAngle);
+            transform.rotation = Quaternion.Euler(currentRotation.y, currentRotation.x, 0);
+        }
         //transform.Rotate(0, 0, -Input.GetAxis("QandE") * 90 * Time.deltaTime);
         //if (Input.GetMouseButtonDown(0))
         //    Cursor.lockState = CursorLockMode.Locked;
