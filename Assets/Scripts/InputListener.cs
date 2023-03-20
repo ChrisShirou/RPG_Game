@@ -6,23 +6,23 @@ using Vector3 = UnityEngine.Vector3;
 
 public class InputListener : MonoBehaviour
 {
-    private GameObject Player;
-    private GameObject GUI;
+    public GameObject Player;
+    public GameObject GUI;
     private PlayerManager playerManager;
     private SkillManager skillManager;
     private UIManager uiManager;
-    private GameManager gameManager;
+    //private GameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
-        Player = GameObject.Find("Player");
+        //Player = GameObject.Find("Player");
         playerManager = Player.GetComponent<PlayerManager>();
         skillManager = Player.GetComponent<SkillManager>();
 
-        GUI = GameObject.Find("GUI");
+        //GUI = GameObject.Find("GUI");
         uiManager = GUI.GetComponent<UIManager>();
 
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        //gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame

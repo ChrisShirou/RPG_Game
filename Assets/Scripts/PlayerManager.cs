@@ -10,9 +10,10 @@ using Vector3 = UnityEngine.Vector3;
 
 public class PlayerManager : Property
 {
+    public GameObject gameUI;
     private Animator animator;
     private UIManager uimanager;
-    private GameObject gameUI;
+    
     private DataManager dataManager;
     private Slider HpBar;
     private Slider MpBar;
@@ -29,7 +30,6 @@ public class PlayerManager : Property
     void Start()
     {
         animator = GetComponent<Animator>();
-        gameUI = GameObject.Find("GUI");
         dataManager = GameObject.Find("GameManager").GetComponent<DataManager>();
         HpBar = gameUI.transform.GetChild(1).gameObject.GetComponent<Slider>();
         MpBar = gameUI.transform.GetChild(2).gameObject.GetComponent<Slider>();
@@ -112,6 +112,7 @@ public class PlayerManager : Property
         if (target)
         {
             print("攻擊範圍內有目標");
+            //玩家進行攻擊
             float enemy_hp = target.GetComponent<EnemyManager>().Hp;
             float damage = this.Atk * atkmult / 100;
             uimanager.ShowDamage(target, damage);
