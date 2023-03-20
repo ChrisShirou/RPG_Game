@@ -519,9 +519,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 606d73d4bbf6aed49be0b0e2016b329d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Lv: 1
   Hp: 50
   Mp: 0
   Atk: 5
+  Exp: 10
   HpBar: {fileID: 2478152013822389773}
   move_speed: 0.5
   rotate_speed: 0.01

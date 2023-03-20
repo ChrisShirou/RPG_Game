@@ -12,17 +12,23 @@ public class UIManager : MonoBehaviour
 
     private GameManager gameManager;
     private DataManager dataManager;
+    private Text playerLevel;
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         dataManager = gameManager.GetComponent<DataManager>();
+        playerLevel = transform.GetChild(3).transform.GetChild(2).GetComponent<Text>();
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+    public void SetLevelUpUI(int lv)
+    {
+        playerLevel.text = lv.ToString();
     }
     public void SetGameList(bool active)
     {

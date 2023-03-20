@@ -10,21 +10,30 @@ using Vector3 = UnityEngine.Vector3;
 
 public class PlayerManager : Property
 {
-    public Slider HpBar;
     private Animator animator;
     private UIManager uimanager;
     private GameObject gameUI;
+    private DataManager dataManager;
+    private Slider HpBar;
+    private Slider MpBar;
+    private Slider ExpBar;
 
     public float moveSpeed = 10;
     public float rotateSpeed = 10;
 
     private float Max_Hp;
+    private float Max_Mp;
+    public float Max_Exp;
     private float rotateValue = 0;
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         gameUI = GameObject.Find("GUI");
+        dataManager = GameObject.Find("GameManager").GetComponent<DataManager>();
+        HpBar = gameUI.transform.GetChild(1).gameObject.GetComponent<Slider>();
+        MpBar = gameUI.transform.GetChild(2).gameObject.GetComponent<Slider>();
+        ExpBar = gameUI.transform.GetChild(4).gameObject.GetComponent<Slider>();
         uimanager = gameUI.GetComponent<UIManager>();
         //產生血條，取得產生血條底下的圖片
         //HpBar = uimanager.ShowHpBar(gameObject.transform);
@@ -38,8 +47,11 @@ public class PlayerManager : Property
         //    CreateRayCast(transform.position, transform.forward * 100 + transform.right * i, Color.red);
         //}
         //根據目前的血量調整血條長度，調整血條面向
-        HpBar.transform.LookAt(Camera.main.transform);
+        //HpBar.transform.LookAt(Camera.main.transform);
         HpBar.value = this.Hp / Max_Hp;
+        MpBar.value = this.Mp / Max_Mp;
+        ExpBar.value = this.Exp / Max_Exp;
+        CheckLevel();
     }
     void CreateRayCast(Vector3 pos, Vector3 direction, Color color)
     {
@@ -53,6 +65,19 @@ public class PlayerManager : Property
             print(hit.point);
             print(hit.transform.position);
             print(hit.collider.gameObject);
+        }
+    }
+    public void CheckLevel()
+    {
+        if (this.Exp > Max_Exp)
+        {
+            //等級增加、最大經驗值更新、血量回復、更新玩家UI等級
+            this.Lv++;
+            this.Atk += 10;
+            this.Exp -= Max_Exp;
+            Max_Exp = dataManager.LevelExp[this.Lv];
+            this.Hp = Max_Hp;
+            uimanager.SetLevelUpUI(this.Lv);
         }
     }
     public void Move(bool isForward)
@@ -98,4 +123,5 @@ public class PlayerManager : Property
             print("攻擊範圍內無目標");
         }
     }
+
 }

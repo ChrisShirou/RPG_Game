@@ -142,6 +142,7 @@ public class EnemyManager : Property
         //檢查血量
         if (this.Hp <= 0) 
         {
+            Player.GetComponent<PlayerManager>().Exp += this.Exp;
             MonsterGenerate monsterGenerate = gameObject.transform.parent.
                                               gameObject.transform.parent.
                                               gameObject.GetComponent<MonsterGenerate>();
