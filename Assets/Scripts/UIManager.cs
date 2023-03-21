@@ -6,19 +6,51 @@ using UnityEngine.UIElements;
 
 public class UIManager : MonoBehaviour
 {
-    public Text text;
+    [SerializeField]
+    [Header("角色資訊")]
+    public GameObject PlayerInfo;
+    [Header("角色屬性介面")]
+    public GameObject PropertyUI;
+    [Header("基礎屬性")]
+    public Text Lv_t;
+    public Text Exp_t;
+    public Text Hp_t;
+    public Text Mp_t;
+    public Text Atk_t;
+    public Text Matk_t;
+    public Text Str_t;
+    public Text Int_t;
+    public Text Con_t;
+    public Text Spi_t;
+    public Text Agi_t;
+    [Header("其他屬性")]
+    public Text Avd_t;
+    public Text Hrt_t;
+    public Text Bkd_t;
+    public Text Pnt_t;
+    public Text Cti_t;
+    public Text Ctd_t;
+    public Text Hlb_t;
+    [Header("防禦屬性")]
+    public Text Def_t;
+    public Text Mdef_t;
+    public Text Ctid_t;
+    [Header("遊戲設定")]
     public GameObject gameList;
-    public float speed;
+    [Header("攻擊數字")]
+    public Text text;
+    
 
     private GameManager gameManager;
     private DataManager dataManager;
     private Text playerLevel;
+    private float speed = 25;
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         dataManager = gameManager.GetComponent<DataManager>();
-        playerLevel = transform.GetChild(3).transform.GetChild(2).GetComponent<Text>();
+        playerLevel = PlayerInfo.transform.GetChild(2).GetComponent<Text>();
     }
 
     // Update is called once per frame
@@ -34,6 +66,11 @@ public class UIManager : MonoBehaviour
     {
         gameManager.isMouseVisible = active;
         gameList.SetActive(active);
+    }
+    public void SetPlayerProperty(bool active)
+    {
+        gameManager.isMouseVisible = active;
+        PropertyUI.SetActive(active);
     }
     public void ShowDamage(Transform target, float number)
     {

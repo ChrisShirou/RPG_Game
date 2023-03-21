@@ -10,6 +10,7 @@ using Vector3 = UnityEngine.Vector3;
 
 public class PlayerManager : Property
 {
+    [Space]
     public GameObject gameUI;
     private Animator animator;
     private UIManager uimanager;
