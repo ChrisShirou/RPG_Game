@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
@@ -11,14 +12,17 @@ public class InputListener : MonoBehaviour
     private PlayerManager playerManager;
     private SkillManager skillManager;
     private UIManager uiManager;
+    private GameManager gameManager;
+    private CameraController cameraController;
     //private GameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
         //Player = GameObject.Find("Player");
         playerManager = Player.GetComponent<PlayerManager>();
+        cameraController = Player.transform.GetChild(0).GetComponent<CameraController>();
         skillManager = Player.GetComponent<SkillManager>();
-
+        gameManager = GetComponent<GameManager>();
         //GUI = GameObject.Find("GUI");
         uiManager = GUI.GetComponent<UIManager>();
 
@@ -61,7 +65,10 @@ public class InputListener : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            uiManager.SetGameList(true);
+            //滑鼠顯示、玩家視角暫停轉動
+            gameManager.isMouseVisible = true;
+            cameraController.isStopRoate = true;
+            uiManager.ShowGameList(true);
         }
     }
 }

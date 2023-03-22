@@ -6,6 +6,8 @@ public class CameraController : MonoBehaviour
 {
     public float rotateSpeed = 10f;
     public float maxYAngle = 80f;
+    public bool isStopRoate = false;
+
     private Vector2 currentRotation;
     // Update is called once per frame
     private GameManager gameManager;
@@ -31,7 +33,7 @@ public class CameraController : MonoBehaviour
         //{
 
         //}
-        if (!gameManager.isMouseVisible)
+        if (!gameManager.isMouseVisible || !isStopRoate)
         {
             currentRotation.x += Input.GetAxis("Mouse X") * rotateSpeed;
             currentRotation.y -= Input.GetAxis("Mouse Y") * rotateSpeed;

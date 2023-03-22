@@ -23,8 +23,8 @@ public class PlayerManager : Property
     public float moveSpeed = 10;
     public float rotateSpeed = 10;
 
-    private float Max_Hp;
-    private float Max_Mp;
+    public float Max_Hp;
+    public float Max_Mp;
     public float Max_Exp;
     private float rotateValue = 0;
     // Start is called before the first frame update
@@ -39,6 +39,7 @@ public class PlayerManager : Property
         //產生血條，取得產生血條底下的圖片
         //HpBar = uimanager.ShowHpBar(gameObject.transform);
         Max_Hp = this.Hp;
+        Max_Mp = this.Mp;
     }
 
     // Update is called once per frame

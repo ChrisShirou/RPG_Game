@@ -20,8 +20,8 @@ public class Property : MonoBehaviour
 
     public float Avd;  //迴避率
     public float Hrt;  //命中率
-    public float Bkd;  //破防
-    public float Pnt;  //穿透
+    public float Bkd;  //物理破防
+    public float Pnt;  //魔法穿透
     public float Cti;  //爆擊
     public float Ctd;  //爆擊傷害
     public float Hlb;  //治療加成
