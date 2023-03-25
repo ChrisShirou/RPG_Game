@@ -18,6 +18,8 @@ public class ExcelManager : MonoBehaviour
 
         for (int i = 0; i < excelRowData.Count; i++)
         {
+            if (excelRowData[i][1].ToString() == "")
+            { return; }
             LevelExp.Add(Int32.Parse(excelRowData[i][1].ToString()));
             Debug.Log(LevelExp[i]);
         }

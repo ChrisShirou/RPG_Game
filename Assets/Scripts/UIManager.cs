@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using Microsoft.SqlServer.Server;
+using UnityEditor;
+using UnityEditor.Experimental.Networking.PlayerConnection;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 using UnityScript.Steps;
 
 public class UIManager : MonoBehaviour
@@ -13,8 +14,12 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     [Header("角色資訊")]
     public GameObject PlayerInfo;
-    [Header("角色屬性介面")]
+    [Header("角色介面")]
     public GameObject PropertyUI;
+    public GameObject ItemUI;
+    public GameObject lattice_pos;
+    public Image lattice;
+    public int lattice_num;
     [Header("基礎屬性")]
     public Text Lv_t;
     public Text Exp_t;
@@ -44,6 +49,8 @@ public class UIManager : MonoBehaviour
     [Header("攻擊數字")]
     public Text text;
     public PlayerManager playerManager;
+    
+
 
     private GameManager gameManager;
     private DataManager dataManager;
@@ -55,6 +62,8 @@ public class UIManager : MonoBehaviour
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         dataManager = gameManager.GetComponent<DataManager>();
         playerLevel = PlayerInfo.transform.GetChild(2).GetComponent<Text>();
+        print(lattice_num / 4);
+        print(lattice_num % 4);
     }
 
     // Update is called once per frame
@@ -92,7 +101,29 @@ public class UIManager : MonoBehaviour
         Mdef_t.text = playerManager.Mdef.ToString();
         Ctid_t.text = playerManager.Ctid.ToString();
     }
-
+    public void SetPlayerItem()
+    {
+        int x;
+        int y;
+        //生成背包格子
+        for (y = 0; y < lattice_num / 4; y++)
+        {
+            for (x = 0; x < 4; x++)
+            {
+                Vector3 pos = new Vector3(lattice_pos.transform.position.x + x * 110, lattice_pos.transform.position.y - y * 110, 0);
+                Instantiate(lattice, pos, lattice_pos.transform.rotation, lattice_pos.transform);
+            }
+        }
+        if (lattice_num % 4 > 0)
+        {
+            y = lattice_num / 4;
+            for (x = 0; x < lattice_num % 4; x++)
+            {
+                Vector3 pos = new Vector3(lattice_pos.transform.position.x + x * 110, lattice_pos.transform.position.y - y * 110, 0);
+                Instantiate(lattice, pos, lattice_pos.transform.rotation, lattice_pos.transform);
+            }
+        }
+    }
     //-----------------------------------------------------------------------------------------------------------------
     public void ShowGameList(bool active)
     {
@@ -106,6 +137,15 @@ public class UIManager : MonoBehaviour
         if (active)
         {
             SetPlayerProperty();
+        }
+    }
+    public void ShowPlayerItem(bool active)
+    {
+        gameManager.isMouseVisible = active;
+        ItemUI.SetActive(active);
+        if (active)
+        {
+            SetPlayerItem();
         }
     }
     public void ShowDamage(Transform target, float number)
