@@ -17,9 +17,11 @@ public class UIManager : MonoBehaviour
     [Header("角色介面")]
     public GameObject PropertyUI;
     public GameObject ItemUI;
-    public GameObject lattice_pos;
-    public Image lattice;
-    public int lattice_num;
+    public GameObject Item_Content; //背包顯示範圍
+    public GameObject Item_Bar; //背包拉條
+    public GameObject lattice_pos; //背包格子生成位置
+    public Image lattice;   //背包格子
+    public int lattice_num; //背包數量
     [Header("基礎屬性")]
     public Text Lv_t;
     public Text Exp_t;
@@ -105,13 +107,37 @@ public class UIManager : MonoBehaviour
     {
         int x;
         int y;
+        //
+        if (lattice_num / 4 > 5)
+        {
+            //Item_Content
+            Item_Bar.transform.localScale = Vector3.one;
+            Item_Content.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 590 + ((lattice_num / 4) - 5) * 110);
+            if (lattice_num % 4 > 0)
+            {
+                Item_Content.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 590 + ((lattice_num / 4) - 5 + 1) * 110);
+            }
+        }
+        else
+        {
+            if (lattice_num % 4 > 0)
+            {
+                Item_Bar.transform.localScale = Vector3.one;
+                Item_Content.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 590 + 110);
+            }
+            else
+            {
+                Item_Bar.transform.localScale = Vector3.zero;
+                Debug.Log("Item_Bar 隱藏");
+            }
+        }
         //生成背包格子
         for (y = 0; y < lattice_num / 4; y++)
         {
             for (x = 0; x < 4; x++)
             {
                 Vector3 pos = new Vector3(lattice_pos.transform.position.x + x * 110, lattice_pos.transform.position.y - y * 110, 0);
-                Instantiate(lattice, pos, lattice_pos.transform.rotation, lattice_pos.transform);
+                Instantiate(lattice, pos, lattice_pos.transform.rotation, Item_Content.transform);
             }
         }
         if (lattice_num % 4 > 0)
@@ -120,7 +146,7 @@ public class UIManager : MonoBehaviour
             for (x = 0; x < lattice_num % 4; x++)
             {
                 Vector3 pos = new Vector3(lattice_pos.transform.position.x + x * 110, lattice_pos.transform.position.y - y * 110, 0);
-                Instantiate(lattice, pos, lattice_pos.transform.rotation, lattice_pos.transform);
+                Instantiate(lattice, pos, lattice_pos.transform.rotation, Item_Content.transform);
             }
         }
     }

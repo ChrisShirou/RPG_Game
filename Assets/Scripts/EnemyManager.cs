@@ -13,8 +13,10 @@ public class EnemyManager : Property
     public Slider HpBar;
     public float move_speed = 0.01f;
     public float rotate_speed = 0.01f;
+    public List<string> fakedrops = new List<string>();
 
     private GameObject Player;
+    private ExcelManager ExcelManager;
     private Vector3 playerLastPos;
 
     //是否進入緊戒狀態
@@ -31,7 +33,9 @@ public class EnemyManager : Property
     // Start is called before the first frame update
     void Start()
     {
+        fakedrops.Add("0001");
         Player = GameObject.Find("Player");
+        ExcelManager = GameObject.Find("GameManager").GetComponent<ExcelManager>();
         Max_Hp = this.Hp;
     }
 
@@ -142,12 +146,23 @@ public class EnemyManager : Property
         //檢查血量
         if (this.Hp <= 0) 
         {
-            Player.GetComponent<PlayerManager>().Exp += this.Exp;
-            MonsterGenerate monsterGenerate = gameObject.transform.parent.
-                                              gameObject.transform.parent.
-                                              gameObject.GetComponent<MonsterGenerate>();
-            monsterGenerate.slimeNumber--;
-            Destroy(gameObject);
+            Dead();
         }
+    }
+    void Dead()
+    {
+        Player.GetComponent<PlayerManager>().Exp += this.Exp;
+        MonsterGenerate monsterGenerate = gameObject.transform.parent.
+                                          gameObject.transform.parent.
+                                          gameObject.GetComponent<MonsterGenerate>();
+        monsterGenerate.slimeNumber--;
+
+
+        Debug.Log(ExcelManager.ItemData["0001"][0]); 
+        Destroy(gameObject);
+    }
+    void DropItem()
+    {
+        
     }
 }
